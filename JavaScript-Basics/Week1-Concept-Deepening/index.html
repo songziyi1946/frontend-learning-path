@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 类型转换
+        console.log(typeof(a)) // undefined
+        console.log(typeof(undefined)) // undefined
+        console.log(typeof(NaN)) // number
+        console.log(typeof(null)) // object
+        var a = '123abc'
+        console.log(typeof(+a)) // number
+        console.log(typeof(!!a)) // boolean
+        console.log(typeof(a+'')) // sting
+        console.log(1 == '1') // true
+        console.log(NaN == NaN) // false
+        console.log(NaN == undefined) // false
+        console.log('11' + 11) // '1111'
+        console.log(1 === '1') // false
+        console.log(parseInt('123abc')) // 123
+        var num = 123123.345789
+        console.log(num.toFixed(3)) // '123123.346'
+        console.log(typeof(typeof(a))) // string
+    </script>
+    
+</body>
+</html>
