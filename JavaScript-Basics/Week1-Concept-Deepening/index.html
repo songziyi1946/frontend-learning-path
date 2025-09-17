@@ -25,6 +25,29 @@
         var num = 123123.345789
         console.log(num.toFixed(3)) // '123123.346'
         console.log(typeof(typeof(a))) // string
+
+        // 函数
+        function sum(a, b, c, d){
+            if(sum.length > arguments.length){
+                console.log('形参多了')
+            }else if(sum.length < arguments.length){
+                console.log('实参多了')
+            }else{
+                console.log('相等')
+            }
+        }
+
+        sum(11, 12, 13)
+
+        // 形参实参映射
+        function demo(a, b){
+            a = 2
+            console.log(a) // 2
+            arguments[0] = 3
+            console.log(a) // 3
+        }
+
+        demo(1, 2)
     </script>
     
 </body>
