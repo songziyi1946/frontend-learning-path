@@ -48,6 +48,78 @@
         }
 
         demo(1, 2)
+
+        // 预编译
+        console.log('预编译练习')
+        console.log('1-----') 
+        function fn(a){
+            console.log(a) // function a(){}
+            var a = 123;
+            console.log(a) // 123
+
+            function a(){}
+            console.log(a) //123
+
+            var b = function(){}
+            console.log(b) // function (){}
+
+            function d(){}
+        }
+        fn(1);
+
+        console.log('2-----') 
+        function test1(a, b){
+            console.log(a); // 1
+            c = 0;
+            var c;
+            a = 3;
+            b = 2;
+            console.log(b); // 2
+            function b () {};
+            function d () {};
+            console.log(b); // 2
+        }
+        test1(1);
+
+        console.log('3-----') 
+        /**
+         * GO {
+         *  global: undefined -> 100;
+         *  fn: function(){
+         *      ...
+         *  }
+         * }
+         **/
+        global = 100;
+        function fn1(){
+            console.log(global); // AO自己有，就不往上找GO -> undefined
+            global = 200;
+            console.log(global); // 200
+            var global = 300;
+        }
+        /**
+         * AO{
+         *  global: undefined -> 200 -> 300
+         * }
+         **/
+        fn1();
+        var global;
+
+        console.log('4-----') 
+        function test2 (){
+            console.log(b); // undefined
+            if(a){
+                var b = 100;
+            }
+            console.log(b); // undefined
+            c = 234;
+            console.log(c); // 234
+        }
+
+        var a;
+        test2();
+        a = 10;
+        console.log(c); // 234
     </script>
     
 </body>
