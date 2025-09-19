@@ -7,123 +7,183 @@
 </head>
 <body>
     <script>
-        // 类型转换
-        console.log(typeof(a)) // undefined
-        console.log(typeof(undefined)) // undefined
-        console.log(typeof(NaN)) // number
-        console.log(typeof(null)) // object
-        var a = '123abc'
-        console.log(typeof(+a)) // number
-        console.log(typeof(!!a)) // boolean
-        console.log(typeof(a+'')) // sting
-        console.log(1 == '1') // true
-        console.log(NaN == NaN) // false
-        console.log(NaN == undefined) // false
-        console.log('11' + 11) // '1111'
-        console.log(1 === '1') // false
-        console.log(parseInt('123abc')) // 123
-        var num = 123123.345789
-        console.log(num.toFixed(3)) // '123123.346'
-        console.log(typeof(typeof(a))) // string
-        if(typeof(a)&&-true+(+undefined)+""){
-            // “undefined” && (-1+NaN) + ""
-            console.log('你赢了')
-        }
-        // 函数
-        function sum(a, b, c, d){
-            if(sum.length > arguments.length){
-                console.log('形参多了')
-            }else if(sum.length < arguments.length){
-                console.log('实参多了')
-            }else{
-                console.log('相等')
+        // // 类型转换
+        // console.log(typeof(a)) // undefined
+        // console.log(typeof(undefined)) // undefined
+        // console.log(typeof(NaN)) // number
+        // console.log(typeof(null)) // object
+        // var a = '123abc'
+        // console.log(typeof(+a)) // number
+        // console.log(typeof(!!a)) // boolean
+        // console.log(typeof(a+'')) // sting
+        // console.log(1 == '1') // true
+        // console.log(NaN == NaN) // false
+        // console.log(NaN == undefined) // false
+        // console.log('11' + 11) // '1111'
+        // console.log(1 === '1') // false
+        // console.log(parseInt('123abc')) // 123
+        // var num = 123123.345789
+        // console.log(num.toFixed(3)) // '123123.346'
+        // console.log(typeof(typeof(a))) // string
+        // if(typeof(a)&&-true+(+undefined)+""){
+        //     // “undefined” && (-1+NaN) + ""
+        //     console.log('你赢了')
+        // }
+        // // 函数
+        // function sum(a, b, c, d){
+        //     if(sum.length > arguments.length){
+        //         console.log('形参多了')
+        //     }else if(sum.length < arguments.length){
+        //         console.log('实参多了')
+        //     }else{
+        //         console.log('相等')
+        //     }
+        // }
+
+        // sum(11, 12, 13)
+
+        // // 形参实参映射
+        // function demo(a, b){
+        //     a = 2
+        //     console.log(a) // 2
+        //     arguments[0] = 3
+        //     console.log(a) // 3
+        // }
+
+        // demo(1, 2)
+
+        // // 预编译
+        // console.log('预编译练习')
+        // console.log('1-----') 
+        // function fn(a){
+        //     console.log(a) // function a(){}
+        //     var a = 123;
+        //     console.log(a) // 123
+
+        //     function a(){}
+        //     console.log(a) //123
+
+        //     var b = function(){}
+        //     console.log(b) // function (){}
+
+        //     function d(){}
+        // }
+        // fn(1);
+
+        // console.log('2-----') 
+        // function test1(a, b){
+        //     console.log(a); // 1
+        //     c = 0;
+        //     var c;
+        //     a = 3;
+        //     b = 2;
+        //     console.log(b); // 2
+        //     function b () {};
+        //     function d () {};
+        //     console.log(b); // 2
+        // }
+        // test1(1);
+
+        // console.log('3-----') 
+        // /**
+        //  * GO {
+        //  *  global: undefined -> 100;
+        //  *  fn: function(){
+        //  *      ...
+        //  *  }
+        //  * }
+        //  **/
+        // global = 100;
+        // function fn1(){
+        //     console.log(global); // AO自己有，就不往上找GO -> undefined
+        //     global = 200;
+        //     console.log(global); // 200
+        //     var global = 300;
+        // }
+        // /**
+        //  * AO{
+        //  *  global: undefined -> 200 -> 300
+        //  * }
+        //  **/
+        // fn1();
+        // var global;
+
+        // console.log('4-----') 
+        // function test2 (){
+        //     console.log(b); // undefined
+        //     if(a){
+        //         var b = 100;
+        //     }
+        //     console.log(b); // undefined
+        //     c = 234;
+        //     console.log(c); // 234
+        // }
+
+        // var a;
+        // test2();
+        // a = 10;
+        // console.log(c); // 234
+
+        console.log('闭包练习')
+        function test(){
+            var arr = [];
+            for(var i = 0; i < 10; i++){
+                arr[i] = function(){
+                    console.log(i);
+                }
             }
+            return arr;
         }
 
-        sum(11, 12, 13)
+        var myArr = test();
+        for(var j = 0; j < 10; j++){
+            myArr[j]();
+        } // 10个10
 
-        // 形参实参映射
-        function demo(a, b){
-            a = 2
-            console.log(a) // 2
-            arguments[0] = 3
-            console.log(a) // 3
+        // console.log('累加器')
+        // function a(){
+        //     var count = 0;
+        //     function demo(){
+        //     count ++;
+        //     console.log(count);
+        //     }
+        //     return demo;
+        // }
+        // var counter = a()
+        // counter();
+        // counter();
+        // counter();
+        // counter();
+        // counter();
+
+        // console.log('做存储')
+        // function fn(){
+        //     var food = "";
+        //     var obj = {
+        //     eat: () => {
+        //         console.log('I am eating '+ food);
+        //         food = "";
+        //     },
+        //     push: (newFood) => {
+        //         food = newFood;
+        //     }
+        //     }
+        //     return obj;
+        // }
+        // var eater = fn();
+        // eater.push('apple');
+        // eater.eat();
+
+        console.log('练习')
+        var x = 1;
+        // function f(){} 是一个函数表达式（任何被括号括起来的都是表达式）
+        // 函数表达式会返回一个函数对象，而函数对象在条件判断中会被强制转换为布尔值。
+        // 任何非空对象 if 条件中都会被转换为 true。
+        // 变成函数表达式以后，就不是函数定义了，f就消失了；未经声明的变量只有放在 typeof 中不会报错，结果为"undefined"
+        if(function f(){}){
+            x += typeof f;
         }
-
-        demo(1, 2)
-
-        // 预编译
-        console.log('预编译练习')
-        console.log('1-----') 
-        function fn(a){
-            console.log(a) // function a(){}
-            var a = 123;
-            console.log(a) // 123
-
-            function a(){}
-            console.log(a) //123
-
-            var b = function(){}
-            console.log(b) // function (){}
-
-            function d(){}
-        }
-        fn(1);
-
-        console.log('2-----') 
-        function test1(a, b){
-            console.log(a); // 1
-            c = 0;
-            var c;
-            a = 3;
-            b = 2;
-            console.log(b); // 2
-            function b () {};
-            function d () {};
-            console.log(b); // 2
-        }
-        test1(1);
-
-        console.log('3-----') 
-        /**
-         * GO {
-         *  global: undefined -> 100;
-         *  fn: function(){
-         *      ...
-         *  }
-         * }
-         **/
-        global = 100;
-        function fn1(){
-            console.log(global); // AO自己有，就不往上找GO -> undefined
-            global = 200;
-            console.log(global); // 200
-            var global = 300;
-        }
-        /**
-         * AO{
-         *  global: undefined -> 200 -> 300
-         * }
-         **/
-        fn1();
-        var global;
-
-        console.log('4-----') 
-        function test2 (){
-            console.log(b); // undefined
-            if(a){
-                var b = 100;
-            }
-            console.log(b); // undefined
-            c = 234;
-            console.log(c); // 234
-        }
-
-        var a;
-        test2();
-        a = 10;
-        console.log(c); // 234
-
+        console.log(x)
     </script>
     
 </body>
