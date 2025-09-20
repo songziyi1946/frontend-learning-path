@@ -147,4 +147,60 @@
   ```
   - 函数表达式立即执行后，会丢失函数的名字
 
+## 对象
+- **对象的创建方法**：
+  - var obj = {}：plainObject 对象字面量/对象直接量
+  - 构造函数：
+    1）系统自带的构造函数：new Object()
+    2）自定义构造函数（大驼峰式命名规则）
+      - new 关键字：在函数体最前面隐式的加上 *var this = {}*；执行 *this.xx = xxx*；隐式的返回 *return this*
+      <mark>可以在自定义构造函数中显式的返回一个对象，但不可以返回原始值，否则 new 会自动用 this 代替<mark>
+- **原型**：原型是function对象的一个属性，定义了构造函数制造出的对象的公共祖先。通过该构造函数产生的对象，可以继承该原型的属性和方法。原型也是一个对象。
+```javascript
+// Person.prototype -- 原型
+// Person.prototype = {} 是祖先
+Person.prototype.name = 'szy';
+function Person () {}
+var person = new Person(); // 打印 person，是一个Person的空对象 
+```
+  - 提取共有属性
+  - constructor 构造器
+  ```javascript
+  function Car(){}
+  var car = new Car();
+  console.log(car.constructor); // 继承 Car.prototype 原型中的 constructor，这个 constructor 指向 function Car(){} 构造函数
+  ```
+  - 原型链 __proto__
+  ```javascript
+  function Father () {
+    this.money = {
+      card:'visa'
+    }
+  }
+  function Son () {}
+  var son = new Son();
+  console.log(son.money); // { card: 'visa' }
+  son.money = { card: 'master' };
+  console.log(son.money); // { card: 'master'}
+  console.log(father.money); // { card: 'visa'}
+  ```
+  - 绝大多数对象的最终都会继承自Object.prototype，为什么不是全部对象呢？因为如果是使用Object.create(null)，这样创建出来的对象，是没有__proto__属性的
+  ```javascript
+  var obj = {};
+  // obj.__proto__ == Object.prototype
+  ```
+  - Object.create(原型)：对象或者null都可以
+- **call/apply**：改变this指向。
+  - 两者区别：穿参列表不同（call 需要把实参按照形参的个数传进去，apply 需要传一个arguments）
+  ```javascript
+  function Person(name, age){
+    this.name = name;
+    this.age = age;
+  }
+  function Student(name, age, grade){
+    Person.call(this, name, age);
+    this.grade = grade;
+  }
+  var stu = new Student();
+  ```
 

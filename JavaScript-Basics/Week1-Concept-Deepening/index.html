@@ -124,21 +124,33 @@
         // a = 10;
         // console.log(c); // 234
 
-        console.log('闭包练习')
-        function test(){
-            var arr = [];
-            for(var i = 0; i < 10; i++){
-                arr[i] = function(){
-                    console.log(i);
-                }
-            }
-            return arr;
-        }
+        // console.log('5-----')
+        // var x = 1, y = z = 0;
+        // function add(n){
+        //     return n = n + 1;
+        // }
+        // y = add(x);
+        // function add(n){
+        //     return n = n + 3;
+        // }
+        // z = add(x);
+        // console.log(x + ' ' + y + ' ' + z) // 1 4 4
 
-        var myArr = test();
-        for(var j = 0; j < 10; j++){
-            myArr[j]();
-        } // 10个10
+        // console.log('闭包练习')
+        // function test(){
+        //     var arr = [];
+        //     for(var i = 0; i < 10; i++){
+        //         arr[i] = function(){
+        //             console.log(i);
+        //         }
+        //     }
+        //     return arr;
+        // }
+
+        // var myArr = test();
+        // for(var j = 0; j < 10; j++){
+        //     myArr[j]();
+        // } // 10个10
 
         // console.log('累加器')
         // function a(){
@@ -174,16 +186,102 @@
         // eater.push('apple');
         // eater.eat();
 
-        console.log('练习')
-        var x = 1;
-        // function f(){} 是一个函数表达式（任何被括号括起来的都是表达式）
-        // 函数表达式会返回一个函数对象，而函数对象在条件判断中会被强制转换为布尔值。
-        // 任何非空对象 if 条件中都会被转换为 true。
-        // 变成函数表达式以后，就不是函数定义了，f就消失了；未经声明的变量只有放在 typeof 中不会报错，结果为"undefined"
-        if(function f(){}){
-            x += typeof f;
+        // console.log('练习')
+        // var x = 1;
+        // // function f(){} 是一个函数表达式（任何被括号括起来的都是表达式）
+        // // 函数表达式会返回一个函数对象，而函数对象在条件判断中会被强制转换为布尔值。
+        // // 任何非空对象 if 条件中都会被转换为 true。
+        // // 变成函数表达式以后，就不是函数定义了，f就消失了；未经声明的变量只有放在 typeof 中不会报错，结果为"undefined"
+        // if(function f(){}){
+        //     x += typeof f;
+        // }
+        // console.log(x)
+
+        // console.log('构造函数')
+        // function Person (name, age, sex) {
+        //     // var this = {};
+        //     this.name = name;
+        //     this.age = age;
+        //     this.sex = sex;
+        //     // return {}; // person {}
+        //     return 123; // 不可以是原始值，new 只允许对象覆盖隐式的 this
+        //     // return this;
+        // }
+        // let person = new Person('Lily', 12, 'female');
+
+        // console.log('包装类')
+        // var str = 'abc';
+        // str += 1; // str = 'abc1'
+        // var test = typeof(str); // "string" 字符串 原始值
+        // if(test.length === 6){ // 包装类 String() 上本身就具有 length 属性 
+        //     test.sign = 'hhh';
+        //     // new String(test).sign = 'hhh'
+        // }
+        // // new String(test).sign 这里新 new 了一个包装类实例，所以 sign 属性为 undefined
+        // console.log(test.sign); // undefined
+
+        console.log('原型')
+        // console.log('1-----')
+        // Person.prototype.name = 'szy';
+        // function Person () {}
+
+        // var person = new Person(); // person.name = 'szy' 继承祖先的 name 属性
+        // Person.prototype = {
+        //     name: 'sl'
+        // }
+        // console.log(person.name) // 'szy'
+        // Person.prototype.name = 'szy';
+        // function Person () {}
+        // Person.prototype = {
+        //     name: 'sl'
+        // }
+        // var person = new Person();
+        // console.log(person.name) // 'sl'
+        // /**
+        //  * 程序执行顺序：先提升function Person(){}，之后将 prototype.name 设置为 'szy'
+        //  * new 之后，Person 中产生隐式的 var this = { __proto__: Person.prototype }
+        //  * 之后让 Person.prototype 被一个新对象赋值，改变了Person.prototype的引用，
+        //  * 但__proto__的引用还是原来的prototype的引用，所以name还是'szy'
+        //  **/
+
+        // console.log('2-----')
+        // function Father () {
+        //     this.money = {
+        //         card:'visa'
+        //     }
+        //     this.num = 100
+        // }
+        // function Son () {}
+        // var father = new Father();
+        // Son.prototype = father;
+        // var son = new Son();
+        // console.log(son.money); // { card: 'visa' }
+        // son.money = { card: 'master' };
+        // console.log(son.money); // { card: 'master'}
+        // console.log(father.money); // { card: 'visa'}
+        // son.money.card = 'master';
+        // console.log(son.money); // { card: 'master'}
+        // console.log(father.money); // { card: 'master'}
+        // son.num++; // 原始值无法修改到父集
+        // console.log(son.num);
+        // console.log(father.num);
+
+        console.log('3-----')
+        Person.prototype = {
+            name: 'a',
+            sayName:  function () {
+                console.log(this.name);
+            }
         }
-        console.log(x)
+        function Person () {
+            this.name = 'b';
+        }
+        var person = new Person();
+        /**
+         * 小知识点：a.sayName()里面this指向是，谁调用这个方法，this就指向谁
+         **/
+        person.sayName(); // 'b'
+        Person.prototype.sayName(); // 'a'
     </script>
     
 </body>
