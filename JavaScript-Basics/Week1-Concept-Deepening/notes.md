@@ -124,9 +124,32 @@
   eater.eat();
   ```
   - 可以实现封装，属性私有化
-  
+  ```javascript
+   var inherit = (function(){
+      var F = function (){}; // 过渡函数
+      return function (Target, Origin){ // 在这里会形成闭包，F就变成私有化变量
+        F.prototype = Origin.prototype;
+        Target.prototype = new F(); 
+        Target.prototype.constructor = Target;
+        Target.prototype.uber = Origin.prototype;
+      }
+   }());
+  ```
   - 模块化开发，防止污染全局变量
+  ```javascript
+  var name = 'abc';
+  var init = (function(){
+    var name = '123';
 
+    function callName(){
+      console.log(name);
+    }
+    return function(){
+      callName();
+    }
+  }());
+  init(); // '123'
+  ```
 ## 立即执行函数
 - **格式**：此函数没有声明，一次执行完立即被销毁
 ```javascript
@@ -203,4 +226,78 @@ var person = new Person(); // 打印 person，是一个Person的空对象
   }
   var stu = new Student();
   ```
+  *如何实现链式调用模式（模仿jQuery）: 在一个函数的方法中使用 return this*
+  ```javascript
+  var obj = function(){
+    eat: function(){
+      console.log('Eating');
+      return this;
+    },
+    smoke: function(){
+      console.log('Smoking');
+      return this;
+    },
+    drink: function(){
+      console.log('Drinking');
+      return this;
+    },
+    sleep: function(){
+      console.log('Sleeping');
+      return this;
+    }
+  }
+  obj.eat().smoke().drink().sleep();
+  ```
+- **对象的枚举**：
+  - for..in：遍历对象的属性
+  - hasOwnProperty：判断属性是否是对象自己的方法
+  - in：判断这个对象上是否有这个属性，不管是在对象自身的方法上，还是原型链上
+  - A instanceof B：A对象的原型链上有没有B的原型
+  
+## 继承模式 extends
+- **借用构造函数**：
+  - 不能继承借用构造函数的原型
+  - 每次构造函数都要多走一个函数
+```javascript
+function Person(name, age, sex){
+  this.name = name;
+  this.age = age;
+  this.sex = sex;
+}
+
+function Student(name, age, sex, grade){
+  Person.call(this, name, age, sex);
+  this.grade = grade;
+}
+
+var student = new Student();
+```
+- **共有原型**：缺点是Son上无法添加独属于自己的属性
+```javascript
+function Father(){}
+Father.prototype.lastName = 'Li';
+function Son(){}
+function inherit(Target, Origin){
+  Target.prototype = Origin.prototype;
+}
+inherit(Son, Father);
+var son = new Son();
+```
+- **圣杯模式**：
+```javascript
+function inherit(Target, Origin){
+  function F (){}
+  F.prototype = Origin.prototype;
+  Target.prototype = new F();
+  Target.prototype.constructor = Target;
+  Target.prototype.uber = Origin.prototype;
+}
+Father.prototype.lastName = 'Li';
+function Father(){}
+function Son(){}
+inherit(Son, Father);
+var son = new Son();
+var father = new Father();
+```
+
 

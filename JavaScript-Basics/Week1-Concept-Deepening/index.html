@@ -220,7 +220,7 @@
         // // new String(test).sign 这里新 new 了一个包装类实例，所以 sign 属性为 undefined
         // console.log(test.sign); // undefined
 
-        console.log('原型')
+        // console.log('原型')
         // console.log('1-----')
         // Person.prototype.name = 'szy';
         // function Person () {}
@@ -266,22 +266,82 @@
         // console.log(son.num);
         // console.log(father.num);
 
-        console.log('3-----')
-        Person.prototype = {
-            name: 'a',
-            sayName:  function () {
-                console.log(this.name);
-            }
-        }
-        function Person () {
-            this.name = 'b';
-        }
-        var person = new Person();
-        /**
-         * 小知识点：a.sayName()里面this指向是，谁调用这个方法，this就指向谁
-         **/
-        person.sayName(); // 'b'
-        Person.prototype.sayName(); // 'a'
+        // console.log('3-----')
+        // Person.prototype = {
+        //     name: 'a',
+        //     sayName:  function () {
+        //         console.log(this.name);
+        //     }
+        // }
+        // function Person () {
+        //     this.name = 'b';
+        // }
+        // var person = new Person();
+        // /**
+        //  * 小知识点：a.sayName()里面this指向是，谁调用这个方法，this就指向谁
+        //  **/
+        // person.sayName(); // 'b'
+        // Person.prototype.sayName(); // 'a'
+
+        // console.log('继承：共有原型模式')
+        // function Father(){}
+        // Father.prototype.lastName = 'Li';
+        // function Son(){}
+        // function inherit(Target, Origin){
+        //     Target.prototype = Origin.prototype;
+        // }
+        // inherit(Son, Father);
+        // var son = new Son(); // son.lastName = 'Li'
+
+        // console.log('继承：圣杯模式')
+        // function inherit(Target, Origin){
+        //     function F (){}
+        //     F.prototype = Origin.prototype;
+        //     Target.prototype = new F();
+        //     Target.prototype.constructor = Target;
+        //     Target.prototype.uber = Origin.prototype;
+        // }
+        // Father.prototype.lastName = 'Li';
+        // function Father(){}
+        // function Son(){}
+        // inherit(Son, Father);
+        // var son = new Son();
+        // var father = new Father();
+
+        // console.log('函数方法的链式调用')
+        // var obj = {
+        //     eat: function() {
+        //         console.log('Eating');
+        //         return this;
+        //     },
+        //     smoke: function(){
+        //         console.log('Smoking');
+        //         return this;
+        //     },
+        //     drink: function(){
+        //         console.log('Drinking');
+        //         return this;
+        //     },
+        //     sleep: function(){
+        //         console.log('Sleeping');
+        //         return this;
+        //     }
+        // }
+        // obj.eat().smoke().drink().sleep();
+
+        console.log('对象的枚举')
+        // 区分 [] 和 {} 的三种方法
+        // 1---
+        Object.prototype.toString.call([]); // [object Array]
+        Object.prototype.toString.call({}); // [object Object]]
+        // 2---
+        var a = [];
+        var b = {};
+        console.log(a instanceof Array); // true
+        console.log(b instanceof Array); // false
+        // 3--- 通过constructor判断
+        console.log([].constructor); // ƒ Array() { [native code] }
+        console.log(b.constructor); // ƒ Object() { [native code] }
     </script>
     
 </body>
